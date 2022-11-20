@@ -1,27 +1,60 @@
 {
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "lerna": "3.22.1",
-    "npm-run-all": "4.1.5"
+  "name": "@rshackleton/gatsby-transformer-kontent-image",
+  "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image.",
+  "version": "2.1.0",
+  "author": "Richard Shackleton <rshackleton@live.co.uk> (@shackleberry112)",
+  "bugs": {
+    "url": "https://github.com/rshackleton/gatsby-packages/issues"
   },
-  "scripts": {
-    "build": "run-s build:kontent-image build:site",
-    "build:kontent-image": "yarn workspace @rshackleton/gatsby-transformer-kontent-image build",
-    "build:site": "yarn workspace @rshackleton/site build",
-    "clean": "yarn workspace @rshackleton/site clean",
-    "develop": "yarn workspace @rshackleton/site develop",
-    "test": "run-s test:kontent-image",
-    "test:kontent-image": "yarn workspace @rshackleton/gatsby-transformer-kontent-image test",
-    "prepare": "run-s build:kontent-image",
-    "publish-ci": "lerna publish from-package -y --no-verify-access"
-  },
-  "workspaces": [
-    "packages/gatsby-theme-kontent",
-    "packages/gatsby-transformer-kontent-image",
-    "site"
-  ],
   "dependencies": {
-    "@changesets/cli": "2.23.0"
+    "@kentico/kontent-delivery": "^8.2.0",
+    "@types/fs-extra": "^8.0.1",
+    "axios": "^0.24.0",
+    "fs-extra": "^8.1.0",
+    "gatsby-plugin-sharp": "^2.14.3",
+    "gatsby-source-filesystem": "^2.11.1"
+  },
+  "devDependencies": {
+    "@types/jest": "24.9.1",
+    "@types/node": "13.13.52",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
+    "cross-env": "6.0.3",
+    "eslint": "6.8.0",
+    "gatsby": "2.32.13",
+    "jest": "24.9.0",
+    "prettier": "1.19.1",
+    "ts-jest": "24.3.0",
+    "typescript": "3.9.10"
+  },
+  "homepage": "https://github.com/rshackleton/gatsby-packages/tree/master/packages/gatsby-transformer-kontent-image#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "kontent"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@kentico/gatsby-source-kontent": "^6.0.1 || ^7.2.0",
+    "gatsby": "^3.14.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rshackleton/gatsby-packages.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"*.ts\" \"*.js\"",
+    "lint": "eslint src/**/*",
+    "test": "jest --passWithNoTests",
+    "watch": "tsc -w",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
